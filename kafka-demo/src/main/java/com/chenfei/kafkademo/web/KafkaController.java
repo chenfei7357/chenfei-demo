@@ -24,10 +24,11 @@ public class KafkaController {
 	private AdminClient adminClient;
 
 	@GetMapping("/send")
-	public void sendMsg(){
+	public String sendMsg(){
 		for (int i = 0; i <1000 ; i++) {
 			kafkaProducer.send("this is kafka producer demo【"+i+"】!");
 		}
+		return "success";
 	}
 
 	@GetMapping("/create")

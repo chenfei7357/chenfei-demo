@@ -1,10 +1,12 @@
 package com.chenfei.kafkademo.producer;
 
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.admin.AdminClient;
 import org.apache.kafka.clients.admin.NewTopic;
+import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.kafka.core.KafkaAdmin;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
@@ -35,7 +37,9 @@ public class KafkaProducer {
 		String obj2String = JSONObject.toJSONString(obj);
 		log.info("准备发送消息为：{}", obj2String);
 		//发送消息
-		ListenableFuture<SendResult<String, Object>> future = kafkaTemplate.send(TOPIC_TEST, obj);
+		ProducerRecord<String, Object> record = new ProducerRecord<String, Object>(TOPIC_TEST,
+				0,"123", obj);
+		ListenableFuture<SendResult<String, Object>> future = kafkaTemplate.send(record);
 		future.addCallback(new ListenableFutureCallback<SendResult<String, Object>>() {
 			@Override
 			public void onFailure(Throwable throwable) {
