@@ -3,6 +3,7 @@ package com.chenfei.kafkademo.producer;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.chenfei.kafkademo.constant.BizConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.admin.AdminClient;
 import org.apache.kafka.clients.admin.NewTopic;
@@ -23,34 +24,24 @@ public class KafkaProducer {
 	@Resource
 	private KafkaTemplate<String, Object> kafkaTemplate;
 
-	//自定义topic
-	public static final String TOPIC_TEST = "topic.test2";
-
-	//
-	public static final String TOPIC_GROUP1 = "topic.group1";
-
-	//
-	public static final String TOPIC_GROUP2 = "topic.group2";
-
-	public void send(Object obj) {
+	public void send(Object obj,String key) {
 
 		String obj2String = JSONObject.toJSONString(obj);
 		log.info("准备发送消息为：{}", obj2String);
 		//发送消息
-		ProducerRecord<String, Object> record = new ProducerRecord<String, Object>(TOPIC_TEST,
-				0,"123", obj);
+		ProducerRecord<String, Object> record = new ProducerRecord<String, Object>(BizConstant.TOPIC_TEST, key,obj);
 		ListenableFuture<SendResult<String, Object>> future = kafkaTemplate.send(record);
 		future.addCallback(new ListenableFutureCallback<SendResult<String, Object>>() {
 			@Override
 			public void onFailure(Throwable throwable) {
 				//发送失败的处理
-				log.info(TOPIC_TEST + " - 生产者 发送消息失败：" + throwable.getMessage());
+				log.info(BizConstant.TOPIC_TEST + " - 生产者 发送消息失败：" + throwable.getMessage());
 			}
 
 			@Override
 			public void onSuccess(SendResult<String, Object> stringObjectSendResult) {
 				//成功的处理
-				log.info(TOPIC_TEST + " - 生产者 发送消息成功：" + stringObjectSendResult.toString());
+				log.info(BizConstant.TOPIC_TEST + " - 生产者 发送消息成功：" + stringObjectSendResult.toString());
 			}
 		});
 	}

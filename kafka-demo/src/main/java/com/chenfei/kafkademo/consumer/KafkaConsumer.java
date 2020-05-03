@@ -2,13 +2,11 @@ package com.chenfei.kafkademo.consumer;
 
 
 import com.alibaba.fastjson.JSON;
-import com.chenfei.kafkademo.producer.KafkaProducer;
+import com.chenfei.kafkademo.constant.BizConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
-import org.springframework.kafka.support.KafkaHeaders;
-import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -18,13 +16,13 @@ import java.util.Optional;
 @Component
 public class KafkaConsumer {
 
-	@KafkaListener(concurrency = "5",topics = KafkaProducer.TOPIC_TEST,groupId = KafkaProducer.TOPIC_GROUP1)
+	@KafkaListener(concurrency = "5",topics = BizConstant.TOPIC_TEST,groupId = BizConstant.TOPIC_GROUP)
 	public void topic_test(ConsumerRecord record, Acknowledgment ack) {
 		log.info("线程名：{}, 内容：{}", Thread.currentThread().getName(),JSON.toJSONString(record.value()));
 		Optional message = Optional.ofNullable(record.value());
 		if (message.isPresent()) {
 			Object msg = message.get();
-			log.info("topic_test 消费了： Topic:" + record.topic() + ",Message:" + msg);
+			log.info("topic_test 消费了： Topic:" + record.topic() + ",key:" + record.key()+ ",Message:" + msg);
 		}
 		ack.acknowledge();
 	}
