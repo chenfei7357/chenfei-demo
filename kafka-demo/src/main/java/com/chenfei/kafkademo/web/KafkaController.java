@@ -5,6 +5,8 @@ import com.alibaba.fastjson.JSON;
 import com.chenfei.kafkademo.constant.BizConstant;
 import com.chenfei.kafkademo.producer.KafkaProducer;
 import com.google.common.collect.Lists;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.admin.AdminClient;
 import org.apache.kafka.clients.admin.CreateTopicsResult;
@@ -21,6 +23,7 @@ import java.util.concurrent.ExecutionException;
 @Slf4j
 @RestController
 @RequestMapping("/kafka")
+@Api(value = "kafa-发送API")
 public class KafkaController {
 
 	@Resource
@@ -30,6 +33,7 @@ public class KafkaController {
 	private AdminClient adminClient;
 
 	@GetMapping("/send")
+	@ApiOperation(value = "发送消息")
 	public String sendMsg(){
 		for (int i = 0; i <1000 ; i++) {
 			kafkaProducer.send("this is kafka producer demo【"+i+"】!",String.valueOf(i));
@@ -38,6 +42,7 @@ public class KafkaController {
 	}
 
 	@GetMapping("/create")
+	@ApiOperation(value = "创建topic")
 	public void createTopic(){
 		// 这种是手动创建 //10个分区，一个副本
 		// 分区多的好处是能快速的处理并发量，但是也要根据机器的配置
