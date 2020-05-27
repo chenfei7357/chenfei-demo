@@ -29,9 +29,13 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       # 值的反序列化方式
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      max-poll-records: 100
+      group-id: topic-test_group
     listener:
       # 在侦听器容器中运行的线程数。
-      concurrency: 10
+      concurrency: 5
       #listner负责ack，每调用一次，就立即commit
-      ack-mode: manual_immediate
+      ack-mode: MANUAL
       missing-topics-fatal: false
+#      type: batch
+
