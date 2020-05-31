@@ -26,37 +26,37 @@ import java.util.concurrent.ExecutionException;
 @Api(value = "kafa-发送API")
 public class KafkaController {
 
-	@Resource
-	private KafkaProducer kafkaProducer;
+//	@Resource
+//	private KafkaProducer kafkaProducer;
+//
+//	@Resource
+//	private AdminClient adminClient;
 
-	@Resource
-	private AdminClient adminClient;
-
-	@GetMapping("/send")
-	@ApiOperation(value = "发送消息")
-	public String sendMsg(){
-		for (int i = 0; i <1000 ; i++) {
-			kafkaProducer.send("this is kafka producer demo【"+i+"】!",String.valueOf(i));
-		}
-		return "success";
-	}
-
-	@GetMapping("/create")
-	@ApiOperation(value = "创建topic")
-	public void createTopic(){
-		// 这种是手动创建 //10个分区，一个副本
-		// 分区多的好处是能快速的处理并发量，但是也要根据机器的配置
-		NewTopic topic = new NewTopic(BizConstant.TOPIC_TEST, 10, (short) 1);
-		CreateTopicsResult topics = adminClient.createTopics(Arrays.asList(topic));
-		topics.values().values().stream().forEach(voidKafkaFuture -> {
-			try {
-				System.out.println("创建topic结果：" + JSON.toJSONString(voidKafkaFuture.get()));
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			} catch (ExecutionException e) {
-				e.printStackTrace();
-			}
-		});
-
-	}
+//	@GetMapping("/send")
+//	@ApiOperation(value = "发送消息")
+//	public String sendMsg(){
+//		for (int i = 0; i <1000 ; i++) {
+//			kafkaProducer.send("this is kafka producer demo【"+i+"】!",String.valueOf(i));
+//		}
+//		return "success";
+//	}
+//
+//	@GetMapping("/create")
+//	@ApiOperation(value = "创建topic")
+//	public void createTopic(){
+//		// 这种是手动创建 //10个分区，一个副本
+//		// 分区多的好处是能快速的处理并发量，但是也要根据机器的配置
+//		NewTopic topic = new NewTopic(BizConstant.TOPIC_TEST, 10, (short) 1);
+//		CreateTopicsResult topics = adminClient.createTopics(Arrays.asList(topic));
+//		topics.values().values().stream().forEach(voidKafkaFuture -> {
+//			try {
+//				System.out.println("创建topic结果：" + JSON.toJSONString(voidKafkaFuture.get()));
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			} catch (ExecutionException e) {
+//				e.printStackTrace();
+//			}
+//		});
+//
+//	}
 }

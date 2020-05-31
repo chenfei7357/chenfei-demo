@@ -17,19 +17,19 @@ import java.util.Optional;
 @Slf4j
 @Component
 public class KafkaConsumerDemo {
-
-	@KafkaListener(topics = BizConstant.YC,groupId = BizConstant.TOPIC_GROUP)
-	public void topic_test(List<ConsumerRecord<String, String>> records, Acknowledgment ack) {
-		log.info("线程名：{}, 内容：{}", Thread.currentThread().getName());
-		for (ConsumerRecord<String, String> record : records) {
-			Optional message = Optional.ofNullable(record.value());
-			if (message.isPresent()) {
-				Object msg = message.get();
-				log.info("topic_test 消费了： Topic:" + record.topic() + ",key:" + record.key()+ ",Message:" + msg);
-			}
-		}
-		ack.acknowledge();
-	}
+//
+//	@KafkaListener(topics = BizConstant.YC,groupId = BizConstant.TOPIC_GROUP)
+//	public void topic_test(List<ConsumerRecord<String, String>> records, Acknowledgment ack) {
+//		log.info("线程名：{}, 内容：{}", Thread.currentThread().getName());
+//		for (ConsumerRecord<String, String> record : records) {
+//			Optional message = Optional.ofNullable(record.value());
+//			if (message.isPresent()) {
+//				Object msg = message.get();
+//				log.info("topic_test 消费了： Topic:" + record.topic() + ",key:" + record.key()+ ",Message:" + msg);
+//			}
+//		}
+//		ack.acknowledge();
+//	}
 
 //	@KafkaListener(topics = BizConstant.TOPIC_TEST_U, groupId = BizConstant.TOPIC_GROUP)
 //	public void topic_test1(ConsumerRecord<?, ?> record, Acknowledgment ack) {
