@@ -1,5 +1,7 @@
 package com.chenfei.zuuldemo.sentinelConfig;
 
+import com.alibaba.csp.sentinel.adapter.gateway.common.api.ApiDefinition;
+import com.alibaba.csp.sentinel.adapter.gateway.common.api.GatewayApiDefinitionManager;
 import com.alibaba.csp.sentinel.adapter.gateway.common.rule.GatewayFlowRule;
 import com.alibaba.csp.sentinel.adapter.gateway.common.rule.GatewayRuleManager;
 import com.alibaba.csp.sentinel.adapter.gateway.zuul.fallback.ZuulBlockFallbackManager;
@@ -19,7 +21,7 @@ import org.springframework.context.annotation.Configuration;
 import javax.annotation.Resource;
 import java.util.Set;
 
-//@Configuration
+@Configuration
 @Slf4j
 public class ZuulConfig implements InitializingBean {
 
@@ -31,11 +33,11 @@ public class ZuulConfig implements InitializingBean {
 	public void afterPropertiesSet() throws Exception {
 
 		// 注册 FallbackProvider
-//		ZuulBlockFallbackManager.registerProvider(new MyBlockFallbackProvider());
+		ZuulBlockFallbackManager.registerProvider(new MyBlockFallbackProvider());
 		//静态加载限流规则
 		//initGatewayRules();
 		//动态加载限流规则
-//		this.initApolloFlowRule();
+		this.initApolloFlowRule();
 
 	}
 
@@ -77,9 +79,15 @@ public class ZuulConfig implements InitializingBean {
 	//动态监听加载限流规则
 	private void initApolloFlowRule() {
 		String defaultFlowRules = "[]";
-		ReadableDataSource<String, Set<GatewayFlowRule>> flowRuleDataSource = new ApolloDataSource<>("application", "flowRules",
+		ReadableDataSource<String, Set<GatewayFlowRule>> flowRuleDataSource = new ApolloDataSource<>("gateway-flowRule", "zuul-demo-gateway-flow-rules",
 				defaultFlowRules, source -> JSON.parseObject(source, new TypeReference<Set<GatewayFlowRule>>() {}));
 		log.info("flowRules:{}",JSON.toJSONString(flowRuleDataSource.getProperty()));
 		GatewayRuleManager.register2Property(flowRuleDataSource.getProperty());
+
+
+		ReadableDataSource<String, Set<ApiDefinition>> apiRuleDataSource = new ApolloDataSource<>("gateway" +
+				"-flowRule", "zuul-demo-gateway-api-rules",
+				defaultFlowRules, source -> JSON.parseObject(source, new TypeReference<Set<ApiDefinition>>() {}));
+		GatewayApiDefinitionManager.register2Property(apiRuleDataSource.getProperty());
 	}
 }

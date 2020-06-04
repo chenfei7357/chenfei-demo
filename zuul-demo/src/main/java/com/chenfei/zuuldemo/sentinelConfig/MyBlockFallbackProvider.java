@@ -16,9 +16,9 @@ public class MyBlockFallbackProvider implements ZuulBlockFallbackProvider {
 	public BlockResponse fallbackResponse(String route, Throwable cause) {
 		log.info("请求错误信息：{}",cause);
 		if (cause instanceof BlockException) {
-			return new BlockResponse(429, "请求频繁", route);
+			return new BlockResponse(429, "请求频繁,请稍息后重试", route);
 		} else {
-			return new BlockResponse(500, "System Error", route);
+			return new BlockResponse(500, "系统异常", route);
 		}
 	}
 }
