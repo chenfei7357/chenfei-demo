@@ -21,7 +21,7 @@ import org.springframework.context.annotation.Configuration;
 import javax.annotation.Resource;
 import java.util.Set;
 
-@Configuration
+//@Configuration
 @Slf4j
 public class ZuulConfig implements InitializingBean {
 
