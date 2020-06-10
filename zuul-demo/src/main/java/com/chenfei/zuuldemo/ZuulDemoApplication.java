@@ -15,7 +15,6 @@ public class ZuulDemoApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ZuulDemoApplication.class, args);
-
 		// 注册 FallbackProvider
 		ZuulBlockFallbackManager.registerProvider(new MyBlockFallbackProvider());
 	}
