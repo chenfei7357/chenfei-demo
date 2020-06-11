@@ -25,15 +25,15 @@ public class Demo {
 
 	public static void main(String[] args) throws Exception {
 
-//		for (int i = 0; i <100 ; i++) {
-//			try {
+		for (int i = 0; i <2 ; i++) {
+			try {
 //				executorService.execute(() -> testGet("http://localhost:8888/my_api/demo/sayHello?str=212313"));
-//				executorService.execute(() -> testGet("http://localhost:8888/kafka-demo/demo/sayHello?str=212313"));
-//			}catch (Exception e){
-//				System.out.println("错误："+e);
-//			}
-//		}
-//		TimeUnit.SECONDS.sleep(100);
+				executorService.execute(() -> testGet("http://localhost:8888/kafka-demo/demo/sayHello?str=212313"));
+			}catch (Exception e){
+				System.out.println("错误："+e);
+			}
+		}
+		TimeUnit.SECONDS.sleep(100);
 
 //		for (int i = 0; i < 1000; i++) {
 //			testGet("http://localhost:8888/my_api/demo/sayHello?str=212313");
@@ -48,13 +48,13 @@ public class Demo {
 //		}else{
 //			System.out.println("交换失败，最新值为："+lastPastTimeRef.get());
 //		}
-		for (int i = 0; i <10 ; i++) {
-			if(test(1,1,5)){
-				System.out.println("成功");
-			}else{
-				System.out.println("失败");
-			};
-		}
+//		for (int i = 0; i <10 ; i++) {
+//			if(test(1,1,5)){
+//				System.out.println("成功");
+//			}else{
+//				System.out.println("失败");
+//			};
+//		}
 	}
 
 	private static void testGet(String reqUrl)  {
