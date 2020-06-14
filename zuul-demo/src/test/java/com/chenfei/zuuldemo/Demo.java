@@ -14,6 +14,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -25,15 +26,29 @@ public class Demo {
 
 	public static void main(String[] args) throws Exception {
 
-		for (int i = 0; i <2 ; i++) {
-			try {
-//				executorService.execute(() -> testGet("http://localhost:8888/my_api/demo/sayHello?str=212313"));
-				executorService.execute(() -> testGet("http://localhost:8888/kafka-demo/demo/sayHello?str=212313"));
-			}catch (Exception e){
-				System.out.println("错误："+e);
+//		for (int i = 0; i <2 ; i++) {
+//			try {
+////				executorService.execute(() -> testGet("http://localhost:8888/my_api/demo/sayHello?str=212313"));
+//				executorService.execute(() -> testGet("http://localhost:8888/kafka-demo/demo/sayHello?str=212313"));
+//			}catch (Exception e){
+//				System.out.println("错误："+e);
+//			}
+//		}
+		int num=0;
+		while (true){
+			if(num%2==0){
+				TimeUnit.MILLISECONDS.sleep(10);
 			}
+//			executorService.execute(() -> testGet("http://localhost:8889/kafka-demo/demo/sayHello?str=212313"));
+//			testGet("http://localhost:8889/kafka-demo/demo/sayHello?str=212313");
+			testGet("http://localhost:8889/openApi/demo/sayHello?str=212313");
+			num++;
 		}
-		TimeUnit.SECONDS.sleep(100);
+//		for (int i = 0; i <20000 ; i++) {
+//			testGet("http://localhost:8889/openApi/demo/sayHello?str=212313");
+//		}
+//		System.out.println("结束");
+//		TimeUnit.SECONDS.sleep(100);
 
 //		for (int i = 0; i < 1000; i++) {
 //			testGet("http://localhost:8888/my_api/demo/sayHello?str=212313");

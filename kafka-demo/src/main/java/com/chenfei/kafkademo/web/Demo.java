@@ -21,7 +21,7 @@ public class Demo {
 	@ApiOperation(value = "demo-sayHello")
 	public String sayHello(@RequestParam("str") String str){
 
-		return str+"12321"+"port:"+port;
+		return str+",port:"+port;
 	}
 
 	@PostMapping("/postSayHello")
