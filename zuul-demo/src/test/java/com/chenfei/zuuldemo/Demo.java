@@ -26,22 +26,14 @@ public class Demo {
 
 	public static void main(String[] args) throws Exception {
 
-//		for (int i = 0; i <2 ; i++) {
-//			try {
-////				executorService.execute(() -> testGet("http://localhost:8888/my_api/demo/sayHello?str=212313"));
-//				executorService.execute(() -> testGet("http://localhost:8888/kafka-demo/demo/sayHello?str=212313"));
-//			}catch (Exception e){
-//				System.out.println("错误："+e);
-//			}
-//		}
 		int num=0;
 		while (true){
 			if(num%2==0){
 				TimeUnit.MILLISECONDS.sleep(10);
 			}
-//			executorService.execute(() -> testGet("http://localhost:8889/kafka-demo/demo/sayHello?str=212313"));
+			executorService.execute(() -> testGet("http://localhost:8889/api/myApi/demo/sayHello?str=212313"));
 //			testGet("http://localhost:8889/kafka-demo/demo/sayHello?str=212313");
-			testGet("http://localhost:8889/openApi/demo/sayHello?str=212313");
+//			testGet("http://localhost:8889/api/myApi/demo/sayHello?str=212313");
 			num++;
 		}
 //		for (int i = 0; i <20000 ; i++) {

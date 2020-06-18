@@ -1,7 +1,9 @@
 package com.chenfei.zuuldemo.customFilter;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.chenfei.zuuldemo.sentinelConfig.GatewayFlowRuleProperties;
+import com.google.gson.JsonObject;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
@@ -65,7 +67,11 @@ public class TokenFilter extends ZuulFilter {
 			context.setSendZuulResponse(false);
 			context.setResponseStatusCode(404);
 			try {
-				context.getResponse().getWriter().write("token is empty");
+				JSONObject object = new JSONObject();
+				object.put("code",400);
+				object.put("message","token is empty");
+				context.addZuulResponseHeader("Content-Type", "application/json;charset=UTF-8");
+				context.getResponse().getWriter().write(object.toJSONString());
 			} catch (Exception e) {
 				log.error("errorMsg:{}", e);
 			}
