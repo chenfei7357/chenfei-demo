@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.concurrent.TimeUnit;
+
 @Slf4j
 @RestController
 @RequestMapping("/demo")
@@ -20,7 +22,11 @@ public class Demo {
 	@GetMapping("/sayHello")
 	@ApiOperation(value = "demo-sayHello")
 	public String sayHello(@RequestParam("str") String str){
-
+		try {
+			TimeUnit.MILLISECONDS.sleep(30);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		return str+",port:"+port;
 	}
 
