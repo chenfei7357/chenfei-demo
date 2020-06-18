@@ -17,15 +17,14 @@ public class MyBlockFallbackProvider implements ZuulBlockFallbackProvider {
 
 	@Override
 	public BlockResponse fallbackResponse(String route, Throwable cause) {
-		log.info("请求错误信息：{}",cause);
 		if(cause instanceof ParamFlowException){
-			return new BlockResponse(200, "请求频繁GatewayFlowException,请稍后重试", route);
+			return new BlockResponse(429, "请求频繁GatewayFlowException,请稍后重试", route);
 		} else if(cause instanceof DegradeException){
-			return new BlockResponse(200, "请求被降级DegradeException,请稍后重试", route);
+			return new BlockResponse(429, "请求被降级DegradeException,请稍后重试", route);
 		}else if(cause instanceof SystemBlockException){
-			return new BlockResponse(200, "请求被系统规则拦截SystemBlockException,请稍后重试", route);
+			return new BlockResponse(429, "请求被系统规则拦截SystemBlockException,请稍后重试", route);
 		}else if(cause instanceof BlockException) {
-			return new BlockResponse(200, "请求频繁BlockException,请稍后重试", route);
+			return new BlockResponse(429, "请求频繁BlockException,请稍后重试", route);
 		} else {
 			return new BlockResponse(500, "系统异常", route);
 		}

@@ -1,19 +1,26 @@
 package com.chenfei.zuuldemo;
 
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
 import com.alibaba.csp.sentinel.log.RecordLog;
 import com.alibaba.csp.sentinel.slots.block.flow.param.ParamFlowRule;
 import com.alibaba.csp.sentinel.slots.statistic.cache.CacheMap;
 import com.alibaba.csp.sentinel.slots.statistic.cache.ConcurrentLinkedHashMapWrapper;
 import com.alibaba.csp.sentinel.util.TimeUtil;
 import com.google.common.collect.Maps;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -26,12 +33,15 @@ public class Demo {
 
 	public static void main(String[] args) throws Exception {
 
+		setLogLevel();
+
+		CloseableHttpClient httpclient = HttpClients.createDefault();
 		int num=0;
 		while (true){
 			if(num%2==0){
 				TimeUnit.MILLISECONDS.sleep(10);
 			}
-			executorService.execute(() -> testGet("http://localhost:8889/api/myApi/demo/sayHello?str=212313"));
+			executorService.execute(() -> testGet("http://localhost:8889/api/myApi/demo/sayHello?str=212313",httpclient));
 //			testGet("http://localhost:8889/kafka-demo/demo/sayHello?str=212313");
 //			testGet("http://localhost:8889/api/myApi/demo/sayHello?str=212313");
 			num++;
@@ -64,29 +74,21 @@ public class Demo {
 //		}
 	}
 
-	private static void testGet(String reqUrl)  {
+
+
+	private static void testGet(String reqUrl,CloseableHttpClient httpclient)  {
 		try {
-			URL url = new URL(reqUrl);
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setRequestMethod("GET");
-			conn.setRequestProperty("Connection", "close");
-			conn.setRequestProperty("token", "1");
-			conn.connect();
-
-
-			// 获取输入流
-			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-			String line;
-			StringBuilder sb = new StringBuilder();
-			while ((line = br.readLine()) != null) {// 循环读取流
-				sb.append(line);
-			}
-			br.close();// 关闭流
-			conn.disconnect();// 断开连接
-			System.out.println("返回结果：" +sb.toString());
+			HttpGet httpget = new HttpGet(reqUrl);
+			httpget.setHeader("token", "1");
+			httpget.setHeader("Content-Type","application/json");
+			CloseableHttpResponse execute =null;
+			execute = httpclient.execute(httpget);
+			//请求体内容
+			String content = EntityUtils.toString(execute.getEntity(), "UTF-8");
+			//内容
+			System.out.println("返回结果：" + content);
 		}catch (Exception e){
 			throw new RuntimeException(e);
-//			System.out.println("错误："+e);
 		}
 
 	}
@@ -131,6 +133,15 @@ public class Demo {
 			} else {
 				return false;
 			}
+		}
+	}
+
+	private static void setLogLevel() {
+		Set<String> loggers = new HashSet<>(Arrays.asList("org.apache.http"));
+		for (String log : loggers) {
+			Logger logger = (Logger) LoggerFactory.getLogger(log);
+			logger.setLevel(Level.INFO);
+			logger.setAdditive(false);
 		}
 	}
 }
