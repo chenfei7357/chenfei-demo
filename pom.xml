@@ -11,6 +11,7 @@
         <module>zuul-demo</module>
         <module>kafka-demo</module>
         <module>eureka-server-demo</module>
+        <module>sentinel-dashboard</module>
     </modules>
 
     <name>chenfei-demo-parent</name>
