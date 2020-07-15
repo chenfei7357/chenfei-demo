@@ -72,10 +72,16 @@ public class Demo {
 	}
 
 	private Map<String, Object> getGitHubUserInfo(String accessToken) {
-		String url="https://api.github.com/user?access_token=";
+		System.out.println("accessToken:"+accessToken);
+		String url="https://api.github.com/user?access_token="+accessToken;
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		HttpGet get = new HttpGet(url+accessToken);
+		HttpGet get = new HttpGet(url);
 		try {
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			CloseableHttpResponse execute = httpclient.execute(get);
 			String res = EntityUtils.toString(execute.getEntity(),"utf-8");
 			Map<String,Object> result =JSON.parseObject(res, Map.class);
@@ -92,7 +98,7 @@ public class Demo {
 		String url="https://github.com/login/oauth/access_token";
 		Map<String, String> map = new HashMap<>();
 		map.put("client_id", "73f4f09327a729c6ac61");
-		map.put("client_secret", "8702186404ff9c383fdfafb660ba5cd9c1e1e340-");
+		map.put("client_secret", "8702186404ff9c383fdfafb660ba5cd9c1e1e340");
 		map.put("state",state);
 		map.put("code", code);
 		map.put("redirect_uri", "http://localhost:8081/demo/callback");
