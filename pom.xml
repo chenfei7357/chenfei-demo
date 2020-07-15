@@ -12,6 +12,7 @@
         <module>kafka-demo</module>
         <module>eureka-server-demo</module>
         <module>sentinel-dashboard</module>
+        <module>spring-security-demo</module>
     </modules>
 
     <name>chenfei-demo-parent</name>
