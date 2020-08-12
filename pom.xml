@@ -13,6 +13,7 @@
         <module>eureka-server-demo</module>
         <module>sentinel-dashboard</module>
         <module>spring-security-demo</module>
+        <module>elasticjob-demo</module>
     </modules>
 
     <name>chenfei-demo-parent</name>
@@ -48,6 +49,16 @@
                 <version>${spring-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-framework</artifactId>
+                <version>5.1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-recipes</artifactId>
+                <version>5.1.0</version>
             </dependency>
             <dependency>
                 <groupId>com.github.xiaoymin</groupId>
@@ -94,7 +105,16 @@
                 <version>2.2.1.RELEASE</version>
             </dependency>
 
-
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-recipes</artifactId>
+                <version>5.1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.shardingsphere.elasticjob</groupId>
+                <artifactId>elasticjob-lite-spring-boot-starter</artifactId>
+                <version>3.0.0-alpha</version>
+            </dependency>
 
             <dependency>
                 <groupId>com.alibaba</groupId>
@@ -105,6 +125,11 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>29.0-jre</version>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>5.1.47</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
