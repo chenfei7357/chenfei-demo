@@ -14,6 +14,7 @@
         <module>sentinel-dashboard</module>
         <module>spring-security-demo</module>
         <module>elasticjob-demo</module>
+        <module>easyexcel-demo</module>
     </modules>
 
     <name>chenfei-demo-parent</name>
@@ -114,6 +115,11 @@
                 <groupId>org.apache.shardingsphere.elasticjob</groupId>
                 <artifactId>elasticjob-lite-spring-boot-starter</artifactId>
                 <version>3.0.0-alpha</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>easyexcel</artifactId>
+                <version>2.2.6</version>
             </dependency>
 
             <dependency>
