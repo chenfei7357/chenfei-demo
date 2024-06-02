@@ -1,6 +1,7 @@
 package com.ruijie.demo.receipt.bizEnum;
 
-import org.apache.commons.lang.StringUtils;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 收货方式枚举

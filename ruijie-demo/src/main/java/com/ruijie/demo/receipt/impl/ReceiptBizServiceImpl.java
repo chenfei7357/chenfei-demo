@@ -14,7 +14,7 @@ import com.ruijie.demo.receipt.request.AppReceiptReq;
 import com.ruijie.demo.receipt.request.PcReceiptReq;
 import com.ruijie.demo.receipt.request.ReceiptContex;
 import com.ruijie.demo.receipt.request.UnifiedReceiptReq;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 

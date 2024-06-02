@@ -6,7 +6,7 @@ import com.ruijie.demo.receipt.extension.IExtensionPoint;
 import com.ruijie.demo.receipt.receipt.ReceiptService;
 import com.ruijie.demo.receipt.request.ReceiptContex;
 import com.ruijie.demo.receipt.request.UnifiedReceiptReq;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 /**

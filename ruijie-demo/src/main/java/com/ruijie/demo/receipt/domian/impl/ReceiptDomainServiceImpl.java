@@ -1,14 +1,14 @@
 package com.ruijie.demo.receipt.domian.impl;
 
-import com.chenfei.kafkademo.test.Identity.ReceiptIdentity;
-import com.chenfei.kafkademo.test.bizEnum.ReceiptReqSourceEnum;
-import com.chenfei.kafkademo.test.bizEnum.ReceiptTypeEnum;
-import com.chenfei.kafkademo.test.domian.ReceiptDomainService;
-import com.chenfei.kafkademo.test.extension.ExtensionFactory;
-import com.chenfei.kafkademo.test.receipt.ReceiptService;
-import com.chenfei.kafkademo.test.request.ReceiptContex;
-import com.chenfei.kafkademo.test.request.UnifiedReceiptReq;
-import org.apache.commons.lang.StringUtils;
+import com.ruijie.demo.receipt.Identity.ReceiptIdentity;
+import com.ruijie.demo.receipt.bizEnum.ReceiptReqSourceEnum;
+import com.ruijie.demo.receipt.bizEnum.ReceiptTypeEnum;
+import com.ruijie.demo.receipt.domian.ReceiptDomainService;
+import com.ruijie.demo.receipt.extension.ExtensionFactory;
+import com.ruijie.demo.receipt.receipt.ReceiptService;
+import com.ruijie.demo.receipt.request.ReceiptContex;
+import com.ruijie.demo.receipt.request.UnifiedReceiptReq;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.util.Asserts;
 import org.springframework.stereotype.Service;
 

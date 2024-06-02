@@ -1,6 +1,7 @@
 package com.ruijie.demo.receipt.bizEnum;
 
-import org.apache.commons.lang.StringUtils;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 收货请求来源枚举
@@ -37,7 +38,7 @@ public enum ReceiptReqSourceEnum implements BaseBizEnum{
 	 * @return
 	 */
 	public static ReceiptReqSourceEnum getEnum(String code){
-		if(StringUtils.isBlank(code)){
+		if(StringUtils.isEmpty(code)){
 			return null;
 		}
 		for (ReceiptReqSourceEnum value : ReceiptReqSourceEnum.values()) {
