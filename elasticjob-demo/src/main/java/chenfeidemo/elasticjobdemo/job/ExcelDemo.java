@@ -6,6 +6,7 @@ import com.alibaba.excel.write.metadata.WriteSheet;
 import com.alibaba.excel.write.metadata.WriteTable;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import org.springframework.util.StopWatch;
 
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -15,8 +16,10 @@ public class ExcelDemo {
 
 	public static void main(String[] args) throws Exception {
 		// 文件输出位置
+		StopWatch stopWatch = new StopWatch("大数据批量导出");
+		stopWatch.start("创建文件");
 		OutputStream out = new FileOutputStream("/Users/yh/Desktop/demo.xlsx");
-		ExcelWriter writer = EasyExcelFactory.write(out).build();
+		ExcelWriter writer = EasyExcelFactory.write(out).autoCloseStream(true).build();
 		// 动态添加表头，适用一些表头动态变化的场景
 		WriteSheet sheet = new WriteSheet();
 		sheet.setSheetName("非注解导出");
@@ -25,10 +28,20 @@ public class ExcelDemo {
 		WriteTable table = new WriteTable( );
 		table.setTableNo(1);
 		table.setHead(head(fieldHead()));
-		// 写数据
-		writer.write(contentData(fieldHead(),data()), sheet, table);
+		stopWatch.stop();
+		//分批次写数据
+		List<List<Object>> result=Lists.newArrayList();
+		stopWatch.start("获取导出的数据");
+		for (int i = 0; i <=50 ; i++) {
+//			writer.write(contentData(fieldHead(), data(i)), sheet, table);
+			result.addAll(contentData(fieldHead(), data(i)));
+		}
+		writer.write(result, sheet, table);
 		writer.finish();
+		stopWatch.stop();
 		out.close();
+		System.out.println(stopWatch.prettyPrint());
+		Thread.sleep(10000000);
 	}
 
 	private static List<List<Object>> contentData(List<Map<String,String>> fieldHead,
@@ -79,20 +92,20 @@ public class ExcelDemo {
 	}
 
 
-	private static List<Map<String,Object>> data(){
+	private static List<Map<String,Object>> data(int j){
 		List<Map<String,Object>> datas =Lists.newArrayList();
-		for (int i = 0; i <10 ; i++) {
-			Map<String,Object> a=Maps.newHashMap();
-			//key为字段名 value为列名对应的值
-			a.put("a","第一列值:"+i);
-			//key为字段名 value为中文描述
-			a.put("b","第二列值:"+i);
-			//key为字段名 value为中文描述
-			a.put("c","第三列值:"+i);
-			//key为字段名 value为中文描述
-			a.put("d","第四列值:"+i);
-			datas.add(a);
-		}
+			for (int i = 0; i <10000 ; i++) {
+				Map<String,Object> a=Maps.newHashMap();
+				//key为字段名 value为列名对应的值
+				a.put("a","第一列值:"+"j:"+j+" i:"+i);
+				//key为字段名 value为中文描述
+				a.put("b","第二列值:"+"j:"+j+" i:"+i);
+				//key为字段名 value为中文描述
+				a.put("c","第三列值:"+"j:"+j+" i:"+i);
+				//key为字段名 value为中文描述
+				a.put("d","第四列值:"+"j:"+j+" i:"+i);
+				datas.add(a);
+			}
 		return datas;
 
 	}
