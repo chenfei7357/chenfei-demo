@@ -1,4 +1,4 @@
-package chenfeidemo.elasticjobdemo.job;
+package com.chenfei.easyexceldemo.demo;
 
 import com.alibaba.excel.EasyExcelFactory;
 import com.alibaba.excel.ExcelWriter;
